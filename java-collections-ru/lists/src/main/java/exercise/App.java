@@ -16,7 +16,7 @@ class App {
 
         for (String wordChar : wordCharsList) {
             for (String symbol : symbolsList) {
-                if (symbolsList.contains(wordChar)) {
+                if (symbol.equals(wordChar)) {
                     symbolsList.remove(wordChar);
                     break;
                 } else {
