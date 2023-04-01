@@ -47,8 +47,10 @@ class App {
                                                       Map<String, String> whereBooks) {
         List<Map<String, String>> result = new ArrayList<>();
 
+        boolean match;
+
         for (Map<String, String> book : listOfBooks) {
-            boolean match = true;
+            match = true;
             for (Map.Entry<String, String> entry : whereBooks.entrySet()) {
                 String key = entry.getKey();
                 String value = entry.getValue();
