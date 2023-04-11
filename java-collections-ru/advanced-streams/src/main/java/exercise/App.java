@@ -27,11 +27,10 @@ class App {
 
         System.out.println(stringBuilder.toString());
 
-        String splitedConfig = Arrays.stream(stringBuilder.toString().split(",")).toList()
+        return Arrays.stream(stringBuilder.toString().split(",")).toList()
                 .stream().filter(string -> string.startsWith("X_FORWARDED_"))
                 .map(string -> string.replaceAll("X_FORWARDED_", ""))
                 .collect(Collectors.joining(","));
-        return splitedConfig;
     }
 }
 //END
