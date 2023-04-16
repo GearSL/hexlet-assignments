@@ -4,8 +4,8 @@ import java.util.*;
 
 // BEGIN
 class App {
-    public static Map<String, String> genDiff(Map<String, Object> firstDictionary, Map<String,
-            Object> secondDictionary) {
+    public static Map<String, String> genDiff(Map<String, Object> firstDictionary,
+                                              Map<String, Object> secondDictionary) {
 
         Map<String, String> result = new LinkedHashMap<>();
         Set<String> keys = new TreeSet<>(firstDictionary.keySet());
