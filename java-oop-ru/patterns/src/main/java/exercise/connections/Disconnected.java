@@ -4,14 +4,14 @@ import exercise.TcpConnection;
 
 // BEGIN
 public class Disconnected implements Connection{
-    private final TcpConnection tcp;
-    public Disconnected(TcpConnection tcp) {
-        this.tcp = tcp;
+    private final TcpConnection connection;
+    public Disconnected(TcpConnection connection) {
+        this.connection = connection;
     }
 
     @Override
     public void connect() {
-        System.out.println("connected");
+        connection.setState(new Connected(connection));
     }
 
     @Override
@@ -25,7 +25,7 @@ public class Disconnected implements Connection{
     }
 
     @Override
-    public String getCurrentState() {
+    public String getName() {
         return "disconnected";
     }
 }

@@ -4,15 +4,15 @@ import exercise.TcpConnection;
 
 // BEGIN
 public class Connected implements Connection {
-    private final TcpConnection tcp;
+    private final TcpConnection connection;
 
-    public Connected(TcpConnection tcp) {
-        this.tcp = tcp;
+    public Connected(TcpConnection connection) {
+        this.connection = connection;
     }
 
     @Override
     public void connect() {
-        System.out.println("Error, already connected! =(");
+        System.out.println("Error, already connected!");
     }
 
     @Override
@@ -22,12 +22,11 @@ public class Connected implements Connection {
 
     @Override
     public void disconnect() {
-        tcp.disconnect();
-        System.out.println("disconnected");
+        connection.setState(new Disconnected(connection));
     }
 
     @Override
-    public String getCurrentState() {
+    public String getName() {
         return "connected";
     }
 }

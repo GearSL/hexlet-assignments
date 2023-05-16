@@ -11,33 +11,36 @@ public class TcpConnection {
     String ip;
     int port;
     private Connection state;
+    List<String> buffer = new ArrayList<>();
+
     public TcpConnection(String ip, int port) {
         this.ip = ip;
         this.port = port;
+        this.state = new Disconnected(this);
     }
 
     public void connect() {
-        if(state == null){
-            state = new Connected(this);
-        } else {
-            state.connect();
-        }
+        state.connect();
     }
 
     public void write(String data) {
         state.write(data);
     }
 
+    public void addToBuffer(String data) {
+        buffer.add(data);
+    }
+
     public void disconnect() {
-        if(state.getCurrentState().equals("disconnected")) {
-            state.disconnect();
-        } else {
-            state = new Disconnected(this);
-        }
+        state.disconnect();
+    }
+
+    public void setState(Connection stateObject) {
+        state = stateObject;
     }
 
     public String getCurrentState() {
-        return state.getCurrentState();
+        return state.getName();
     }
 }
 // END
