@@ -29,8 +29,8 @@ public class App {
         // Регистрируем сервлет
         app.addServlet(ctx, "HelloServlet", new WelcomeServlet());
         // Назначаем сервлет как обработчик запросов по пути "/hello"
-        // На примере хоста и порта выше - "http://localhost:8000/hello"
-        ctx.addServletMappingDecoded("/hello", "HelloServlet");
+        // На примере хоста и порта выше - "http://localhost:8000/"
+        ctx.addServletMappingDecoded("/", "HelloServlet");
         // END
 
         return app;
