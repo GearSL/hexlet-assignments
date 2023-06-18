@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import lombok.RequiredArgsConstructor;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 
@@ -30,13 +32,26 @@ public class PeopleController {
     }
 
     @GetMapping(path = "")
-    public Iterable<Person> getPeople() {
-        return this.personRepository.findAll();
+    public List<PersonDto> getPeople() {
+        List<PersonDto> personsDtoList = new ArrayList<>();
+        Iterable<Person> persons = this.personRepository.findAll();
+
+        persons.forEach(person -> {
+            PersonDto personDto = new PersonDto();
+            personDto.setFirstName(person.getFirstName());
+            personDto.setLastName(person.getLastName());
+            personsDtoList.add(personDto);
+        });
+
+        return personsDtoList;
     }
 
     // BEGIN
     @PostMapping
-    public void createPerson(@RequestBody Person person) {
+    public void createPerson(@RequestBody PersonDto personDto) {
+        Person person = new Person();
+        person.setFirstName(personDto.getFirstName());
+        person.setLastName(personDto.getLastName());
         personRepository.save(person);
     }
 
@@ -46,9 +61,12 @@ public class PeopleController {
     }
 
     @PatchMapping(path = "/{id}")
-    public void patchPerson(@PathVariable Long id, @RequestBody Person updatedPerson) {
-        updatedPerson.setId(id);
-        personRepository.save(updatedPerson);
+    public void patchPerson(@PathVariable Long id, @RequestBody PersonDto updatedPerson) {
+        Person person = new Person();
+        person.setFirstName(updatedPerson.getFirstName());
+        person.setLastName(updatedPerson.getLastName());
+        person.setId(id);
+        personRepository.save(person);
     }
     // END
 }
