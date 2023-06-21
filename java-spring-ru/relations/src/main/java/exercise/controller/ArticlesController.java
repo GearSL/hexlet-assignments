@@ -5,6 +5,7 @@ import exercise.model.Article;
 import exercise.repository.ArticleRepository;
 
 import exercise.services.ArticleService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -34,7 +35,7 @@ public class ArticlesController {
     }
 
     @PostMapping(path = "")
-    public void createArticle(@RequestBody ArticleDto articleDto) {
+    public void createArticle(@RequestBody @Valid ArticleDto articleDto) {
         articleService.createArticle(articleDto);
     }
 
