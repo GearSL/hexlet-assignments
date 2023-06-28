@@ -18,6 +18,7 @@ public class Comment {
     @Lob
     private String content;
     @ManyToOne
+    @JsonIgnore
     private Post post;
     // END
 }

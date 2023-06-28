@@ -3,7 +3,6 @@ package exercise.controller;
 import exercise.dto.CommentDto;
 import exercise.model.Comment;
 import exercise.repository.CommentRepository;
-import exercise.model.Post;
 import exercise.repository.PostRepository;
 import exercise.ResourceNotFoundException;
 import exercise.service.CommentService;
@@ -58,10 +57,11 @@ public class CommentController {
     }
 
     @DeleteMapping(path = "/{postId}/comments/{commentId}")
-    public String deleteComment(@PathVariable long postId,
-                                @PathVariable long commentId,
-                                @RequestBody CommentDto commentDto) {
-        return commentService.deleteComment(commentDto, postId, commentId);
+    public String deleteComment(@PathVariable("postId") long postId,
+                                @PathVariable("commentId") long commentId) {
+        System.out.println("POST ID: " + postId);
+        System.out.println("COMMENT ID: " + commentId);
+        return commentService.deleteComment(postId, commentId);
     }
     // END
 }

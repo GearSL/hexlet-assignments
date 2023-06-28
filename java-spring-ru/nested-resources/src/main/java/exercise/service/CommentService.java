@@ -39,10 +39,9 @@ CommentRepository commentRepository;
         }
     }
 
-    public String deleteComment(CommentDto commentDto, long postId, long commentId) {
+    public String deleteComment(long postId, long commentId) {
         Comment comment = commentRepository.findByIdAndPostId(commentId, postId);
         if (commentRepository.existsById(commentId) && comment != null) {
-            comment.setContent(commentDto.content());
             commentRepository.delete(comment);
             return "Comment was deleted";
         } else {
