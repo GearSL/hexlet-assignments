@@ -1,3 +1,0 @@
-2023-06-15 16:22:13 jdbc[4]: exception
-org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "ARTICLE" not found; SQL statement:
-alter table article drop constraint if exists fk_article_category_id [42102-214]
