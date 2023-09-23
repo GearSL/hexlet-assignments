@@ -32,8 +32,7 @@ class App {
             }
         });
 
-        CompletableFuture<String> resultContent = firstFileContent
-                .thenCombine(secondFileContent, (firstContent, secondContent) -> {
+        return firstFileContent.thenCombine(secondFileContent, (firstContent, secondContent) -> {
 
                     Path path = Paths.get(resultFilePath).toAbsolutePath().normalize();
                     if (!Files.exists(path)) {
@@ -53,8 +52,7 @@ class App {
                 }).exceptionally(ex -> {
                     System.out.println(ex.getMessage());
                     return null;
-                });;
-        return resultContent;
+                });
     }
     // END
 
