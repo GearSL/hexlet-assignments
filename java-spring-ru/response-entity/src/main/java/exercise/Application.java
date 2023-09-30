@@ -42,18 +42,14 @@ public class Application {
     @GetMapping(path = "/posts/{id}")
     public ResponseEntity<Post> getPost(@PathVariable String id) {
         Optional<Post> foundedPost = posts.stream().filter(post -> post.getId().equals(id)).findAny();
-        if (foundedPost.isPresent()) {
-            return ResponseEntity.ok()
-                    .body(foundedPost.orElseThrow());
-        }
-        return ResponseEntity.notFound().build();
+        return ResponseEntity.of(foundedPost);
     }
 
     @PostMapping(path = "/posts")
     public ResponseEntity<Post> createPost(@RequestBody Post post) {
         posts.add(post);
-        return ResponseEntity.status(201)
-                .body(post);
+        URI location = URI.create("/posts");
+        return ResponseEntity.created(location).body(post);
     }
 
     @PutMapping(path = "/posts/{id}")
