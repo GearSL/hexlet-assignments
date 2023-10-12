@@ -8,10 +8,10 @@ import java.time.LocalDateTime;
 import exercise.daytime.Daytime;
 import exercise.daytime.Day;
 import exercise.daytime.Night;
-import org.springframework.context.annotation.Bean;
 
 // BEGIN
-
+import org.springframework.context.annotation.Bean;
+import org.springframework.web.context.annotation.RequestScope;
 // END
 
 @SpringBootApplication
@@ -23,6 +23,7 @@ public class Application {
 
     // BEGIN
     @Bean
+    @RequestScope
     public Daytime getDayTime() {
         int hours = LocalDateTime.now().getHour();
         if(hours >= 6 && hours < 22) {
