@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import exercise.model.Post;
 import exercise.repository.PostRepository;
@@ -29,58 +28,36 @@ class PostsController {
 
     @GetMapping(path = "/{id}")
     public PostDTO getPost(@PathVariable long id) {
-        Post post = postRepository.findById(id).orElseThrow(
-                () -> new ResourceNotFoundException("Post with id " + id + " not found")
-        );
-        List<Comment> comments = commentRepository.findByPostId(post.getId());
-        List<CommentDTO> commentDTOS = new ArrayList<>();
+        var post =  postRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Post with id " + id + " not found"));
 
-        if(!comments.isEmpty()) {
-            for (Comment comment : comments) {
-                CommentDTO commentDTO = new CommentDTO();
-                commentDTO.setId(comment.getId());
-                commentDTO.setBody(comment.getBody());
-                commentDTOS.add(commentDTO);
-            }
-        }
-
-        PostDTO postDTO = new PostDTO();
-        postDTO.setId(post.getId());
-        postDTO.setTitle(post.getTitle());
-        postDTO.setBody(post.getBody());
-        postDTO.setComments(commentDTOS);
-
-        return postDTO;
+        return toPostDTO(post);
     }
 
     @GetMapping
     public List<PostDTO> getPosts() {
-        List<Post> posts = postRepository.findAll();
-        List<PostDTO> postDTOList = new ArrayList<>();
+        var posts = postRepository.findAll();
+        return posts.stream()
+                .map(this::toPostDTO)
+                .toList();
+    }
 
-        for (Post post : posts) {
-            PostDTO postDTO = new PostDTO();
-            postDTO.setId(post.getId());
-            postDTO.setTitle(post.getTitle());
-            postDTO.setBody(post.getBody());
-
-            List<Comment> comments = commentRepository.findByPostId(post.getId());
-            List<CommentDTO> commentDTOS = new ArrayList<>();
-
-            if (!comments.isEmpty()) {
-                for (Comment comment : comments) {
-                    CommentDTO commentDTO = new CommentDTO();
-                    commentDTO.setId(comment.getId());
-                    commentDTO.setBody(comment.getBody());
-                    commentDTOS.add(commentDTO);
-                }
-            }
-
-            postDTO.setComments(commentDTOS);
-            postDTOList.add(postDTO);
-        }
-
-        return postDTOList;
+    private PostDTO toPostDTO(Post post) {
+        var dto = new PostDTO();
+        dto.setId(post.getId());
+        dto.setTitle(post.getTitle());
+        dto.setBody(post.getBody());
+        var comments = commentRepository.findByPostId(post.getId());
+        var commentsDto = comments.stream()
+                .map((comment) -> {
+                    var commentDto = new CommentDTO();
+                    commentDto.setBody(comment.getBody());
+                    commentDto.setId(comment.getId());
+                    return commentDto;
+                })
+                .toList();
+        dto.setComments(commentsDto);
+        return dto;
     }
 }
 // END
