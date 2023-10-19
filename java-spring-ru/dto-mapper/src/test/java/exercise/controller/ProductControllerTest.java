@@ -136,28 +136,28 @@ class ProductControllerTest {
         assertThat(product.getCost()).isEqualTo(data.getPrice());
     }
 
-//    @Test
-//    public void testUpdateWithVendor() throws Exception {
-//
-//        productRepository.save(testProduct);
-//
-//        var data = new HashMap();
-//        data.put("title", "new title");
-//        data.put("price", 20);
-//        data.put("vendorCode", 123L);
-//
-//
-//        var request = put("/products/{id}", testProduct.getId())
-//                .contentType(MediaType.APPLICATION_JSON)
-//                .content(om.writeValueAsString(data));
-//
-//        mockMvc.perform(request)
-//                .andExpect(status().isOk());
-//
-//        var product = productRepository.findById(testProduct.getId()).get();
-//
-//        assertThat(product.getName()).isEqualTo(testProduct.getName());
-//        assertThat(product.getCost()).isEqualTo(data.get("price"));
-//        assertThat(product.getBarcode()).isEqualTo(testProduct.getBarcode());
-//    }
+    @Test
+    public void testUpdateWithVendor() throws Exception {
+
+        productRepository.save(testProduct);
+
+        var data = new HashMap();
+        data.put("title", "new title");
+        data.put("price", 20);
+        data.put("vendorCode", 123L);
+
+
+        var request = put("/products/{id}", testProduct.getId())
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(om.writeValueAsString(data));
+
+        mockMvc.perform(request)
+                .andExpect(status().isOk());
+
+        var product = productRepository.findById(testProduct.getId()).get();
+
+        assertThat(product.getName()).isEqualTo(testProduct.getName());
+        assertThat(product.getCost()).isEqualTo(data.get("price"));
+        assertThat(product.getBarcode()).isEqualTo(testProduct.getBarcode());
+    }
 }
