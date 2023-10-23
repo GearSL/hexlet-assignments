@@ -40,7 +40,8 @@ public class Guest {
     @Email
     private String email;
 
-    @Pattern(regexp = "^[\\+]?[(]?[0-9]{3}[)]?[-\\s\\.]?[0-9]{3}[-\\s\\.]?[0-9]{4,6}$")
+    @Column(unique = true)
+    @Pattern(regexp = "\\+[0-9]{11,13}")
     private String phoneNumber;
 
     @Pattern(regexp = "^\\d{4}$")
