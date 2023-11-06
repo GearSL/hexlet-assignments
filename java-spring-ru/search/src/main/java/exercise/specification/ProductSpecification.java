@@ -39,7 +39,8 @@ public class ProductSpecification {
 
     private Specification<Product> titleContains(String titleCont) {
         return (root, query, cb) ->
-                titleCont == null ? cb.conjunction() : cb.like(cb.lower(root.get("title")), '%'+titleCont.toLowerCase()+'%');
+                titleCont == null ? cb.conjunction() : cb.like(cb.lower(root.get("title")),
+                        '%' + titleCont.toLowerCase() + '%');
     }
 }
 // END
